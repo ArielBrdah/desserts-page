@@ -1,0 +1,339 @@
+@font-face {
+	font-family: "Red Hat Text Bold";
+	src: url(../fonts/static/RedHatText-Bold.ttf);
+}
+
+@font-face {
+	font-family: "Red Hat Text Semi Bold";
+	src: url(../fonts/static/RedHatText-SemiBold.ttf);
+}
+
+@font-face {
+	font-family: "Red Hat Text Regular";
+	src: url(../fonts/static/RedHatText-Regular.ttf);
+}
+
+:root{ 
+
+	/* colors */
+	--red: hsl(14, 86%, 42%);
+	--rose-50: hsl(20, 50%, 98%);
+	--rose-100: hsl(13, 31%, 94%);
+	--rose-300: hsl(14, 25%, 72%);
+	--rose-400: hsl(7, 20%, 60%);
+	--rose-500: hsl(12, 20%, 44%);
+	--rose-900: hsl(14, 65%, 9%);
+	--green: hsl(159, 69%, 38%); 
+	--black: hsl(0, 0%, 0%); 
+	--white: hsl(0, 0%, 100%); 
+
+
+	/* spacing */
+	--text-1: 56px;
+	--text-2: 24px;
+	--text-3: 16px;
+	--text-4: 14px;
+	--text-4-b: 14px;
+	--text-5: 14px;
+
+	/* line-height */
+	--lh-1: 120%;
+	--lh-2: 125%;
+	--lh-3: 150%;
+
+	/* font-family */
+	--ff-bold: "Red Hat Text Bold";
+	--ff-semi: "Red Hat Text Semi Bold";
+	--ff-regular: "Red Hat Text Regular";
+
+	/* spacing */
+	--space-50: 4px;
+	--space-100: calc(2 * var(--space-50));
+	--space-150: calc(3 * var(--space-50));
+	--space-200: calc(4 * var(--space-50));
+	--space-300: calc(6 * var(--space-50));
+	--space-400: calc(8 * var(--space-50));
+	--space-500: calc(10 * var(--space-50));
+	--space-1100: calc(22 * var(--space-50));
+
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	letter-spacing: 0px;
+	position: relative;
+}
+
+body {
+	width: fit-content;
+	margin: auto;
+	background: var(--rose-50);
+	padding: var(--space-100);
+}
+
+/*  layout main */
+#canvas {
+	padding: var(--space-500) var(--space-1100);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--space-400);
+}
+
+
+
+/* dessert container */
+
+#desserts {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-400);
+}
+
+.title {
+	font-family: var(--ff-bold);
+	color: var(--black);
+	font-size: var(--text-1);
+	line-height: var(--lh-1);
+}
+
+/* list container */
+
+.list-cards {
+	/* display: flex; */
+	/* flex-direction: row; */
+	/* flex-wrap: wrap; */
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-auto-rows: auto;
+	gap: var(--space-400) var(--space-300);
+}
+
+/* card */
+.card {
+	max-width: 250px;
+	max-height: 347px;
+	font-family: var(--ff-bold);
+	font-size: var(--text-4-b);
+}
+
+/* card head */
+.card-head { 
+	margin-bottom: var(--space-300);
+}
+
+.card-head img{
+	width: 250px;
+	max-height: 250px;
+	border-radius: var(--space-100);
+	border: none;
+	outline: none;
+	box-shadow: var(--black) 0px 0px 0px;
+}
+
+.card-head .btn-container {
+	width: 100%;
+	font-size: var(--text-4-b);
+	
+	display: flex;
+	justify-content: center;
+
+	position: absolute;
+	bottom: calc(-1 * (var(--text-4-b) + var(--space-150) + 1px ) / 2);
+}
+
+.card-head .btn-container button {
+	width: 160px;
+	font-family: var(--ff-semi);
+	font-size: var(--text-4-b);
+	line-height: var(--lh-1);
+	color: var(--rose-900);
+	padding: var(--space-150);
+	border-radius: 40px;
+	outline: none;
+	border: solid 1px var(--rose-400);
+	background: var(--white);
+	cursor: pointer;
+}
+
+
+.card-head .btn-container button:hover {
+	border-color: var(--red);
+	color: var(--red);
+}
+
+.card-head .btn-container button span {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-100);
+}
+
+.card-head .btn-container button span::before {
+	content: url(../images/icon-add-to-cart.svg);
+	width: 20px;
+	height:20px;
+	color: var(--red);
+}
+
+
+
+/* card body */
+.card .card-body {
+	display:flex;
+	flex-direction: column;
+	gap: var(--space-50);
+}
+
+.card .card-body .category {
+	font-family: var(--ff-regular);
+	color: var(--rose-500);
+	font-size: var(--text-4);
+	
+}
+.card .card-body .name {
+	font-size: var(--text-3);
+	font-family: var(--ff-semi);
+}
+
+.card .card-body .price {
+	font-size: var(--text-3);
+	font-family: var(--ff-semi);
+	color: var(--red);
+}
+
+.card .card-body .price::before {
+	content: "$";
+}
+
+
+/* cart container */
+
+.cart { 
+	background-color: var(--white);
+	width: 384px;
+	padding: var(--space-300);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-300);
+	border-radius: var(--space-150);
+}
+
+.cart-info {
+	color: var(--red);
+	font-family: var(--ff-bold);
+	font-size: var(--text-2);
+	width: fit-content;
+}
+
+.empty-cart {
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.empty-cart-msg {
+	color: var(--rose-400);
+	font-family: var(--ff-semi);
+	font-size: var(--text-4-b);
+	text-align:center;
+}
+
+
+/*  helpers */
+#data {
+	display: none;
+}
+
+@media screen and (max-width: 1439px) {
+
+
+
+	#desserts {
+		width: fit-content;
+		margin: auto;
+	}
+	
+	#cart {
+		width: 687.36px;
+		margin:  auto;
+	}
+	.cart{
+		width: 100%;
+	}
+	body {
+		padding: 0px;
+	}
+	#canvas {
+		padding: var(--space-500);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-400);
+		width: fit-content;
+	}
+
+	.list-cards {
+		gap: var(--space-300);
+	}
+
+	.card, .card img {
+		width: 213.13px;
+	}
+
+}
+
+@media screen and (max-width: 767px) {
+
+
+	#desserts{
+		margin:0;
+		width: 100%;
+	}
+	#canvas {
+		padding: var(--space-500);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-300);
+		width: fit-content;
+	}
+
+	.list-cards {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-300);
+	}
+
+	.card, .card-head, .card .card-head img {
+		min-width: 100%!important;
+		max-width: 100%!important;
+	}
+
+	.card{
+		height: 319px;
+		gap: var(--space-300);
+	}
+
+	.card .card-head {
+		height: 234px;
+		margin-bottom: 10px!important;
+	}
+
+	.card-head .btn-container {
+		bottom: var(--space-50);
+	}
+	.card .card-head img{
+		height: 212px;
+	}
+
+
+	.card .card-body {
+		height: 69px;
+	}
+
+	#cart, .cart {
+		width: 100%;
+	}
+}
