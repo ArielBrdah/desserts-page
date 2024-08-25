@@ -36,13 +36,40 @@
 
       <div class="cart">
         
-          <div class="cart-info">Your cart (<span id="amount-product">0</span>)</div>
+          <div class="cart-info">Your cart (<span id="amount-article">0</span>)</div>
           
-          <div class="empty-cart">
+          <div class="empty-cart" id="empty-cart">
             <img class="empty-cart-img" src="./assets/images/illustration-empty-cart.svg" alt="">
             <div class="empty-cart-msg">
               <p>Your added items will appear here</p>
             </div>
+          </div>
+
+          <div class="cart-articles">
+
+            <div id="articles-selected" class="articles-selected">
+            </div>
+            
+            <div id="total-purchase" style="display: none;">
+              <div class="cart-order-total">
+                <div>Order Total</div>
+                <div id="cart-order-total-price" class="cart-order-total-price">
+                  $46.50
+                </div>
+              </div>
+  
+              <div class="carbon-neutral">
+                <img src="./assets/images/icon-carbon-neutral.svg" alt="">
+                <span>
+                  This is a <strong>carbon-neutral</strong> delivery
+                </span>
+              </div>
+  
+              <div class="confirm-btn" id="confirm-btn" onclick="document.querySelector('#screen-modal').style.display = 'flex'">
+                Confirm Order
+              </div>
+            </div>
+
           </div>
 
       </div>
@@ -52,8 +79,40 @@
   </div>
 
 
-  
+  <div id="screen-modal" style="display: none;">
+     <div class="modal">
+    <div class="modal-head">
+      <div class="confirmed-img">
+        <img src="./assets/images/icon-order-confirmed.svg" alt="">
+      </div>
+      <div class="titles">
+        <div class="title">
+          Order Confirmed
+        </div>
+        <div class="subtitle">
+          We hope you enjoy your food!
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div id="articles-selected-ordered">
 
+      </div>
+      <div class="cart-order-total">
+        <div>Order Total</div>
+        <div id="cart-ordered-total-price" class="cart-order-total-price">
+          $46.50
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="confirm-btn" onclick="Cart.reset()">
+        Start New Order
+      </div>
+    </div>
+  </div>
+  </div>
+ 
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="#">Ariel Berdah</a>.
@@ -111,21 +170,232 @@
 
   <script>
 
+
+    var user, myCart;
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+
+    class Cart {
+      static _amount = document.querySelector(`#amount-article`)
+      static _empty = document.querySelector(`#empty-cart`)
+      static _selected = document.querySelector(`#articles-selected`)
+      static _orderSelected = document.querySelector(`#articles-selected-ordered`)
+      static _totalPrice = document.querySelector(`#cart-order-total-price`)
+      static _totalPriceOrdered = document.querySelector(`#cart-ordered-total-price`)
+      static _totalPurchase = document.querySelector(`#total-purchase`)
+      static amount() {
+
+        let articles = [];
+        let total = 0;
+        let sum = myCart.reduce((a, c) => {
+          
+          total += c.info.price * c.amount
+          let article = `
+          <article class="article" data-article="${c.id}">
+              <div class="article-wrapper">
+                <div class="article-name">${c.info.name}</div>
+                <div class="article-info">
+                  <div class="article-amount">
+                    ${c.amount}X
+                  </div>
+                  <div class="article-unit-price">
+                    @ \$${c.info.price.toFixed(2)}                    
+                  </div>
+                  <div class="article-sum">
+                    \$${(c.info.price * c.amount).toFixed(2)}
+                  </div>
+                </div>
+              </div>
+              <a class="article-close" onclick="myCart[${c.id}].remove(this)">
+                <img src="./assets/images/icon-remove-item.svg" alt="">
+              </a>
+            </article>
+
+            <div class="article-separator"></div>
+            `
+            if(c.amount > 0) articles.push(article);
+          return a + c.amount
+        }, 0)
+
+        if(sum == 0) {
+          this._empty.style.display = "flex"
+          this._totalPurchase.style.display = "none"
+        }
+        else {
+          this._empty.style.display = "none"
+          this._totalPurchase.style.display = "block"
+        }
+        this._amount.innerText = sum
+        this._selected.innerHTML = articles.join();
+        this._orderSelected.innerHTML = articles.join();
+        this._totalPrice.innerText = '$'+total.toFixed(2);
+        this._totalPriceOrdered.innerText = '$'+total.toFixed(2);
+      }
+
+
+      static all() {
+        
+      }
+    
+      static reset(sel) {
+        myCart.forEach( itm => itm.remove())
+        Cart.amount()
+        window.document.querySelector(`#screen-modal`).style.display = "none"
+
+      }
+    }
+
+    class Article {
+
+      #_amount;
+      #_id;
+      #_info;
+    
+      constructor(id, info) {
+        this.#_id = id;
+        this.#_amount = 0;
+        this.#_info = info;
+      }
+    
+      increase(sel) {
+        this.#_amount++;
+        Cart.amount()
+        console.log(myCart)
+        if(sel) {
+          let id = sel.closest('.card').getAttribute('data-article')
+          let amount = myCart[id].amount
+          sel.closest('.card').querySelector('.amount-articles').innerText = amount
+        }
+        if(this.amount == 0 ) {
+          sel.closest('.card').querySelector(".cart-manager").style.display = "none"
+          sel.closest('.card').querySelector(".add-to-cart").style.display = "flex"
+        } else {
+          sel.closest('.card').querySelector(".cart-manager").style.display = "flex"
+          sel.closest('.card').querySelector(".add-to-cart").style.display = "none"
+        }
+      }
+    
+      decrease(sel) {
+
+
+        if(this.amount > 0){
+          this.#_amount--;
+          Cart.amount()
+          if(sel) {
+            let id = sel.closest('.card').getAttribute('data-article')
+            let amount = myCart[id].amount
+            sel.closest('.card').querySelector('.amount-articles').innerText = amount
+          }
+        }
+        if(this.amount == 0 ) {
+          sel.closest('.card').querySelector(".cart-manager").style.display = "none"
+          sel.closest('.card').querySelector(".add-to-cart").style.display = "flex"
+        }else {
+          sel.closest('.card').querySelector(".cart-manager").style.display = "flex"
+          sel.closest('.card').querySelector(".add-to-cart").style.display = "none"
+        }
+      }
+    
+      remove(sel) {
+        console.log(sel)
+        this.#_amount = 0;
+        Cart.amount()
+        if(sel){
+          
+          let id = sel.closest('.article').getAttribute('data-article')
+          let amount = myCart[id].amount
+          window.document.querySelector(`.card[data-article="${id}"] .amount-articles`).innerText = amount
+          if(this.amount == 0 ) {
+            window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "none"
+            window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "flex"
+          }
+          if(this.amount > 0 ) {
+            window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "flex"
+            window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "none"
+          }
+          sel.closest('.article').remove()
+        }
+
+       
+      }
+    
+      set amount(val) {
+        this.#_amount = val;
+      }
+    
+      get amount() {
+        return this.#_amount;
+      }
+    
+      get id() {
+        return this.#_id;
+      }
+
+      get info() {
+        return this.#_info
+      }
+      details() {
+        console.log({amount: this.amount, info: this.info})
+      }
+    
+    }
+
+    class User { 
+      
+      click(sel, cb) {
+        document.addEventListener('click', function(event) {
+        
+          const targetElement = event.target.closest(sel);
+          if (targetElement) {
+            cb(event, targetElement);
+          }
+        })
+      }
+    
+    }
+
+
     function domReady() {
+
+      user = new User();
+      myCart = []
+
       fetch("./data.json")
         .then( resp => resp.json())
         .then( data => {
           let list = document.querySelector('.list-cards')
           var elts = "";
-            data.forEach(itm => {
-              elts += `<div class="card">
+            data.forEach((itm, index) => {
+
+              let article = new Article(index, itm)
+              myCart[index] = article
+              
+
+              elts += `<div class="card" data-article="${index}">
                     <div class="card-head">
 
                       <img src="${itm.image.desktop}" alt="">
                       <div class="btn-container">
-                        <button>
-                                <span>Add to Cart</span>
+                        <button  class="add-to-cart" onclick="myCart[${index}].increase(this)">
+                          <img class="cart-img" width="20" src="./assets/images/icon-add-to-cart.svg" />      
+                          <span>Add to Cart</span>
                         </button>
+                        
+                        <button  style="display:none;" class="cart-manager">
+                                <span class="decrease-btn" onclick="myCart[${index}].decrease(this)">
+                                  <img  width="10" src="./assets/images/icon-decrement-quantity.svg" />
+                                </span>
+                                <span class="amount-articles">0</span>
+                                <span class="increase-btn" onclick="myCart[${index}].increase(this)">
+                                  <img width="10" src="./assets/images/icon-increment-quantity.svg" />
+                                </span>
+                        </button>
+                        
                       </div>
                     </div>
                     
@@ -138,12 +408,13 @@
                   </div>`
               
             })
-            console.log(elts)
             list.innerHTML = elts;
           })
+
     }
 
     document.addEventListener('DOMContentLoaded', domReady);
+    
 
   </script>
 </body>
