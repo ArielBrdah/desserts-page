@@ -65,7 +65,9 @@
                 </span>
               </div>
   
-              <div class="confirm-btn" id="confirm-btn" onclick="document.querySelector('#screen-modal').style.display = 'flex'">
+              <div class="confirm-btn" id="confirm-btn" onclick="
+              window.document.querySelector(`html`).style.overflow = 'hidden';
+              document.querySelector('#screen-modal').style.display = 'flex'">
                 Confirm Order
               </div>
             </div>
@@ -101,7 +103,7 @@
       <div class="cart-order-total">
         <div>Order Total</div>
         <div id="cart-ordered-total-price" class="cart-order-total-price">
-          $46.50
+          $0
         </div>
       </div>
     </div>
@@ -246,6 +248,7 @@
         myCart.forEach( itm => itm.remove())
         Cart.amount()
         window.document.querySelector(`#screen-modal`).style.display = "none"
+        window.document.querySelector(`html`).style.overflow = "auto"
 
       }
     }
@@ -339,9 +342,7 @@
       get info() {
         return this.#_info
       }
-      details() {
-        console.log({amount: this.amount, info: this.info})
-      }
+
     
     }
 
