@@ -58,8 +58,8 @@ class Cart {
 	  this._totalPurchase.style.display = "block"
 	}
 	this._amount.innerText = sum
-	this._selected.innerHTML = articles.join();
-	this._orderSelected.innerHTML = articles.join();
+	this._selected.innerHTML = articles.join(' ');
+	this._orderSelected.innerHTML = articles.join(' ');
 	this._totalPrice.innerText = '$'+total.toFixed(2);
 	this._totalPriceOrdered.innerText = '$'+total.toFixed(2);
   }
