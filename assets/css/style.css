@@ -517,6 +517,7 @@ body {
 
 @media screen and (max-width: 767px) {
 	
+
 	#screen-modal {
 		position: fixed;
 		left: 0;
@@ -598,5 +599,11 @@ body {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.titles{
+		width: 327px;
+		display:flex!important;
+		flex-direction: column-reverse!important;
 	}
 }
