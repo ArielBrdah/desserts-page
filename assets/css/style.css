@@ -468,12 +468,11 @@ body {
 @media screen and (max-width: 1439px) {
 
 	#screen-modal {
-		overflow-y: auto;
+		width:100%;
 	}
 
 	.modal {
 		overflow: hidden;
-		max-height: auto;
 		margin-top: 120px;
 		margin-bottom: 76px;
 	}
@@ -519,10 +518,17 @@ body {
 @media screen and (max-width: 767px) {
 	
 	#screen-modal {
+		position: fixed;
+		left: 0;
+		top: 0;
+
 		align-items: flex-end;
 		justify-content: start;
 		margin:0!important;
 		padding:0!important;
+		
+		width:100%;
+		height: -webkit-fill-available;
 	}
 	.modal {
 		padding: var(--space-300);
@@ -532,8 +538,8 @@ body {
 		width: 100%;
 		margin:0;
 		box-sizing: content-box;
+		border-radius: var(--space-100) var(--space-100) 0 0;
 	}
-
 	#desserts{
 		margin:0;
 		width: 100%;
