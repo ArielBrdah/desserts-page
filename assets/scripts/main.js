@@ -71,6 +71,7 @@ class Cart {
 	window.document.querySelectorAll('.add-to-cart').forEach( itm => itm.style.display = 'flex')
 	window.document.querySelector(`#screen-modal`).style.display = "none"
 	window.document.querySelector(`html`).style.overflow = "auto"
+	window.document.body.scrollTop = 0;
 
   }
 }
