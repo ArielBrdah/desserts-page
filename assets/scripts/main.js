@@ -100,9 +100,12 @@ class Article {
 	if(this.amount == 0 ) {
 	  sel.closest('.card').querySelector(".cart-manager").style.display = "none"
 	  sel.closest('.card').querySelector(".add-to-cart").style.display = "flex"
+	  sel.closest('.card').querySelector(".card-head > img").style.border = "none"
+
 	} else {
 	  sel.closest('.card').querySelector(".cart-manager").style.display = "flex"
 	  sel.closest('.card').querySelector(".add-to-cart").style.display = "none"
+	  sel.closest('.card').querySelector(".card-head > img").style.border = "solid 2px var(--red)"
 	}
   }
 
@@ -121,9 +124,12 @@ class Article {
 	if(this.amount == 0 ) {
 	  sel.closest('.card').querySelector(".cart-manager").style.display = "none"
 	  sel.closest('.card').querySelector(".add-to-cart").style.display = "flex"
+	  sel.closest('.card').querySelector(".card-head > img").style.border = "none"
+
 	}else {
 	  sel.closest('.card').querySelector(".cart-manager").style.display = "flex"
 	  sel.closest('.card').querySelector(".add-to-cart").style.display = "none"
+	  sel.closest('.card').querySelector(".card-head > img").style.border = "solid 2px var(--red)"
 	}
   }
 
@@ -139,11 +145,15 @@ class Article {
 	  if(this.amount == 0 ) {
 		window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "none"
 		window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "flex"
-	  }
+		window.document.querySelector(`.card[data-article="${id}"] > .card-head > img`).style.border = "none"
+	  
+	}
 	  if(this.amount > 0 ) {
 		window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "flex"
 		window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "none"
-	  }
+		window.document.querySelector(`.card[data-article="${id}"] > .card-head > img`).style.border = "solid 2px var(--red)"
+  
+	}
 	  sel.closest('.article').remove()
 	}
 
@@ -187,7 +197,7 @@ function domReady() {
 		  elts += `<div class="card" data-article="${index}">
 				<div class="card-head">
 
-				  <img src="${itm.image.desktop}" alt="">
+				  <img src="${itm.image.desktop}" alt="${itm.name}">
 				  <div class="btn-container">
 					<button  class="add-to-cart" onclick="myCart[${index}].increase(this)">
 					  <img class="cart-img" width="20" src="./assets/images/icon-add-to-cart.svg" />      
