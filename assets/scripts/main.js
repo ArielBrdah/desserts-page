@@ -65,11 +65,20 @@ class Cart {
   }
 
   static reset(sel) {
+	window.document.querySelector(`#screen-modal`).classList.add('fade-out')
+	setTimeout(()=>{
+		window.document.querySelector(`#screen-modal`).classList.remove('fade-out')
+		window.document.querySelector(`#screen-modal`).style.display = "none"
+
+	},1000)
 	myCart.forEach( itm => itm.remove())
 	Cart.render()
 	window.document.querySelectorAll('.cart-manager').forEach(itm => itm.style.display = 'none')
 	window.document.querySelectorAll('.add-to-cart').forEach( itm => itm.style.display = 'flex')
-	window.document.querySelector(`#screen-modal`).style.display = "none"
+	window.document.querySelectorAll(`.card > .card-head > img`).forEach(itm => itm.style.border = "none")
+
+	//window.document.querySelector(`#screen-modal`).style.display = "none"
+
 	window.document.querySelector(`html`).style.overflow = "auto"
 	window.document.body.scrollTop = 0;
 
@@ -142,18 +151,17 @@ class Article {
 	  let id = sel.closest('.article').getAttribute('data-article')
 	  let amount = myCart[id].amount
 	  window.document.querySelector(`.card[data-article="${id}"] .amount-articles`).innerText = amount
-	  if(this.amount == 0 ) {
+	  if(this.#_amount == 0 ) {
 		window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "none"
 		window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "flex"
 		window.document.querySelector(`.card[data-article="${id}"] > .card-head > img`).style.border = "none"
-	  
-	}
-	  if(this.amount > 0 ) {
-		window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "flex"
-		window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "none"
-		window.document.querySelector(`.card[data-article="${id}"] > .card-head > img`).style.border = "solid 2px var(--red)"
-  
-	}
+		}
+	//  if(this.amount > 0 ) {
+	//	window.document.querySelector(`.card[data-article="${id}"] .cart-manager`).style.display = "flex"
+	//	window.document.querySelector(`.card[data-article="${id}"] .add-to-cart`).style.display = "none"
+	//	window.document.querySelector(`.card[data-article="${id}"] > .card-head > img`).style.border = "solid 2px var(--red)"
+  //
+	//}
 	  sel.closest('.article').remove()
 	}
 
@@ -204,7 +212,7 @@ function domReady() {
 					  <span>Add to Cart</span>
 					</button>
 					
-					<button  style="display:none;" class="cart-manager">
+					<button  style="display:none;border: none;" class="cart-manager">
 							<span class="decrease-btn" onclick="myCart[${index}].decrease(this)">
 							  <img  width="10" src="./assets/images/icon-decrement-quantity.svg" />
 							</span>

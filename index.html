@@ -82,7 +82,7 @@
 
 
   <div id="screen-modal" style="display: none;">
-     <div class="modal">
+     <div class="modal slide-in-bottom">
     <div class="modal-head">
       <div class="confirmed-img">
         <img src="./assets/images/icon-order-confirmed.svg" alt="">
@@ -108,7 +108,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <div class="confirm-btn" onclick="Cart.reset()">
+      <div class="confirm-btn" onclick="Cart.reset()" onblur="this.closest('#screen-modal').classList.add('fade-out');">
         Start New Order
       </div>
     </div>
